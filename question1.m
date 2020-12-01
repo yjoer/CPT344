@@ -1,5 +1,5 @@
 %Read Image
-Image1=imread('screenshot.png');
+Image1=imread('1.png');
 %figure(1),imshow(Image1);
 %title('original image');
 
@@ -12,6 +12,7 @@ grayImage=rgb2gray(Image1);
 %Preparation for the boundary tracing using bwboundaries
 threshold = graythresh(grayImage);
 BW = im2bw(grayImage, threshold);
+%BW = imcomplement(BW);
 %figure(3),imshow(BW);
 %title('binary image');
 
@@ -32,20 +33,25 @@ for x = 1:length(stats)
     extent = stats(x).Extent;
     bbox = stats(x).BoundingBox;
     extrema = stats(x).Extrema;
-    if(abs(bbox(3)-bbox(4))<10&&extent==1)
+    if (abs(bbox(3)-bbox(4))<10&&extent==1)
         text(centroid(1)-22,centroid(2),'square');
-    elseif(abs(bbox(3)-bbox(4))>10&&extent==1)
+    end
+    if (abs(bbox(3)-bbox(4))>10&&extent==1)
         text(centroid(1)-25,centroid(2),'rectangle');
-    elseif(((abs(extrema(1,1)-extrema(2,1)))<2)&&((abs(extrema(3,1)-extrema(4,1)))<2)...
+    end
+    if (((abs(extrema(1,1)-extrema(2,1)))<2)&&((abs(extrema(3,1)-extrema(4,1)))<2)...
         &&((abs(extrema(4,1)-extrema(5,1)))<2)&&((abs(extrema(6,1)-extrema(7,1)))<2)...
         &&((abs(extrema(7,1)-extrema(8,1)))<2)&&extent~=1)
         text(centroid(1)-20,centroid(2),'triangle');
-    elseif(((abs(extrema(1,1)-extrema(2,1)))<2)&&((abs(extrema(3,1)-extrema(4,1)))<2)...
+    end
+    if (((abs(extrema(1,1)-extrema(2,1)))<2)&&((abs(extrema(3,1)-extrema(4,1)))<2)...
         &&((abs(extrema(5,1)-extrema(6,1)))<2)&&((abs(extrema(7,1)-extrema(8,1)))<2)&&extent~=1)
         text(centroid(1)-25,centroid(2),'diamond');
-    elseif(abs(bbox(3)-bbox(4))<10&&extent~=1)
+    end
+    if (abs(bbox(3)-bbox(4))<10&&extent~=1)
         text(centroid(1)-17,centroid(2),'circle');
-    elseif(abs(bbox(3)-bbox(4))>10&&extent~=1)
+    end
+    if (abs(bbox(3)-bbox(4))>10&&extent~=1)
         text(centroid(1)-15,centroid(2),'ellipse');
     end
 end
