@@ -3,11 +3,11 @@ clc
 close all
 
 % Custom Parameters
-threshold = 0.88;
+threshold = -1;
 complement = true;
 
 %Read Image
-Image1=imread('3.1.png');
+Image1=imread('2.jpg');
 %figure(1),imshow(Image1);
 %title('original image');
 
@@ -76,10 +76,10 @@ for x = 1:length(stats)
     
     shapeName = {};
     
-    if (abs(bbox(3) - bbox(4)) < 10 && extent == 1)
+    if (abs(bbox(3) - bbox(4)) < 10 && abs(extent - 1) < 0.01)
         shapeName{end+1} = 'square';
     end
-    if (abs(bbox(3) - bbox(4)) > 10 && extent == 1)
+    if (abs(bbox(3) - bbox(4)) > 10 && abs(extent - 1) < 0.01)
         shapeName{end+1} = 'rectangle';
     end
     if (((abs(extrema(1,1)-extrema(2,1)))<3)&&((abs(extrema(3,1)-extrema(4,1)))<2)...
