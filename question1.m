@@ -4,10 +4,10 @@ close all
 
 % Parameters
 threshold = -1;
-complement = false;
+complement = true;
 
 %Read Image
-Image1=imread('1.png');
+Image1=imread('3.3.png');
 %figure(1),imshow(Image1);
 %title('original image');
 
@@ -28,7 +28,7 @@ if (complement == true)
     BW = imcomplement(BW);
 end
 
-%figure(3),imshow(BW);
+figure(3),imshow(BW);
 %title('binary image');
 
 %get label matrix of contiguous region
@@ -73,6 +73,15 @@ for x = 1:length(stats)
     if (abs(extrema(1, 1) - extrema(2, 1)) > 2 &&...
         abs(extrema(5, 1) - extrema(6, 1)) > 2 &&...
         abs(bbox(3)-bbox(4))>10&&extent~=1)
-        text(centroid(1), centroid(2), 'ellipse', 'HorizontalAlignment', 'center');
+        %text(centroid(1), centroid(2), 'ellipse', 'HorizontalAlignment', 'center');
+    end
+    if (((extrema(1, 1) - extrema(6, 1)) > 10 &&...
+        (extrema(2,1) - extrema(5, 1)) > 10))
+        text(centroid(1), centroid(2), 'parallelogram', 'HorizontalAlignment', 'center');
+    end
+    if ((abs(extrema(1,1) - extrema(2,1)) > 10 &&...
+        (extrema(1, 1) - extrema(6, 1)) > 10 &&...
+        (extrema(2,1) - extrema(5, 1)) < -10))
+        text(centroid(1), centroid(2), 'trapezium', 'HorizontalAlignment', 'center');
     end
 end
