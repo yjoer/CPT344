@@ -1,3 +1,11 @@
+clear
+clc
+close all
+
+% Parameters
+threshold = -1;
+complement = false;
+
 %Read Image
 Image1=imread('1.png');
 %figure(1),imshow(Image1);
@@ -10,9 +18,16 @@ grayImage=rgb2gray(Image1);
 
 %Convert it into black and white image
 %Preparation for the boundary tracing using bwboundaries
-threshold = graythresh(grayImage);
+if (threshold == -1)
+    threshold = graythresh(grayImage);
+end
+
 BW = im2bw(grayImage, threshold);
-%BW = imcomplement(BW);
+
+if (complement == true)
+    BW = imcomplement(BW);
+end
+
 %figure(3),imshow(BW);
 %title('binary image');
 
