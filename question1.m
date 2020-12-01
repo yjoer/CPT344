@@ -45,6 +45,7 @@ hold on
 %recognize shape using image properties
 for x = 1:length(stats)
     centroid = stats(x).Centroid;
+    circularity = stats(x).Circularity;
     extent = stats(x).Extent;
     bbox = stats(x).BoundingBox;
     extrema = stats(x).Extrema;
@@ -69,7 +70,9 @@ for x = 1:length(stats)
         &&((abs(extrema(5,1)-extrema(6,1)))<3)&&((abs(extrema(7,1)-extrema(8,1)))<2)&&extent~=1)
         shapeName = 'diamond';
     end
-    if (abs(bbox(3)-bbox(4))<10&&extent~=1)
+    if (abs(bbox(3)-bbox(4)) < 10 &&...
+        abs(circularity - 1) < 0.01 &&...
+        extent~=1)
         shapeName = 'circle';
     end
     if (abs(extrema(1, 1) - extrema(2, 1)) > 2 &&...
