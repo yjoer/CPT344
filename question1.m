@@ -52,36 +52,40 @@ for x = 1:length(stats)
     hold on;
     plot(extrema(:,1), extrema(:,2), 'ko');
     
+    shapeName = '';
+    
     if (abs(bbox(3)-bbox(4))<10&&extent==1)
-        text(centroid(1), centroid(2), 'square', 'HorizontalAlignment', 'center');
+        shapeName = 'square';
     end
     if (abs(bbox(3)-bbox(4))>10&&extent==1)
-        text(centroid(1), centroid(2), 'rectangle', 'HorizontalAlignment', 'center');
+        shapeName = 'rectangle';
     end
     if (((abs(extrema(1,1)-extrema(2,1)))<3)&&((abs(extrema(3,1)-extrema(4,1)))<2)...
         &&((abs(extrema(4,1)-extrema(5,1)))<2)&&((abs(extrema(6,1)-extrema(7,1)))<2)...
         &&((abs(extrema(7,1)-extrema(8,1)))<2)&&extent~=1)
-        text(centroid(1), centroid(2), 'triangle', 'HorizontalAlignment', 'center');
+        shapeName = 'triangle';
     end
     if (((abs(extrema(1,1)-extrema(2,1)))<3)&&((abs(extrema(3,1)-extrema(4,1)))<2)...
         &&((abs(extrema(5,1)-extrema(6,1)))<3)&&((abs(extrema(7,1)-extrema(8,1)))<2)&&extent~=1)
-        text(centroid(1), centroid(2), 'diamond', 'HorizontalAlignment', 'center');
+        shapeName = 'diamond';
     end
     if (abs(bbox(3)-bbox(4))<10&&extent~=1)
-        text(centroid(1), centroid(2), 'circle', 'HorizontalAlignment', 'center');
+        shapeName = 'circle';
     end
     if (abs(extrema(1, 1) - extrema(2, 1)) > 2 &&...
         abs(extrema(5, 1) - extrema(6, 1)) > 2 &&...
         abs(bbox(3)-bbox(4))>10&&extent~=1)
-        %text(centroid(1), centroid(2), 'ellipse', 'HorizontalAlignment', 'center');
+        %shapeName = 'ellipse';
     end
     if (((extrema(1, 1) - extrema(6, 1)) > 10 &&...
         (extrema(2,1) - extrema(5, 1)) > 10))
-        text(centroid(1), centroid(2), 'parallelogram', 'HorizontalAlignment', 'center');
+        shapeName = 'parallelogram';
     end
     if ((abs(extrema(1,1) - extrema(2,1)) > 10 &&...
         (extrema(1, 1) - extrema(6, 1)) > 10 &&...
         (extrema(2,1) - extrema(5, 1)) < -10))
-        text(centroid(1), centroid(2), 'trapezium', 'HorizontalAlignment', 'center');
+        shapeName = 'trapezium';
     end
+    
+    text(centroid(1), centroid(2), shapeName, 'HorizontalAlignment', 'center');
 end
