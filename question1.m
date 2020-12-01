@@ -37,29 +37,27 @@ for x = 1:length(stats)
     hold on;
     plot(extrema(:,1), extrema(:,2), 'ko');
     
-    text(centroid(1) + 40, centroid(2), string());
-    
     if (abs(bbox(3)-bbox(4))<10&&extent==1)
-        text(centroid(1)-22,centroid(2),'square');
+        text(centroid(1), centroid(2), 'square', 'HorizontalAlignment', 'center');
     end
     if (abs(bbox(3)-bbox(4))>10&&extent==1)
-        text(centroid(1)-25,centroid(2),'rectangle');
+        text(centroid(1), centroid(2), 'rectangle', 'HorizontalAlignment', 'center');
     end
     if (((abs(extrema(1,1)-extrema(2,1)))<2)&&((abs(extrema(3,1)-extrema(4,1)))<2)...
         &&((abs(extrema(4,1)-extrema(5,1)))<2)&&((abs(extrema(6,1)-extrema(7,1)))<2)...
         &&((abs(extrema(7,1)-extrema(8,1)))<2)&&extent~=1)
-        text(centroid(1)-20,centroid(2),'triangle');
+        text(centroid(1), centroid(2), 'triangle', 'HorizontalAlignment', 'center');
     end
     if (((abs(extrema(1,1)-extrema(2,1)))<2)&&((abs(extrema(3,1)-extrema(4,1)))<2)...
         &&((abs(extrema(5,1)-extrema(6,1)))<2)&&((abs(extrema(7,1)-extrema(8,1)))<2)&&extent~=1)
-        text(centroid(1)-25,centroid(2),'diamond');
+        text(centroid(1), centroid(2), 'diamond', 'HorizontalAlignment', 'center');
     end
     if (abs(bbox(3)-bbox(4))<10&&extent~=1)
-        text(centroid(1)-17,centroid(2),'circle');
+        text(centroid(1), centroid(2), 'circle', 'HorizontalAlignment', 'center');
     end
     if (abs(extrema(1, 1) - extrema(2, 1)) > 2 &&...
         abs(extrema(5, 1) - extrema(6, 1)) > 2 &&...
         abs(bbox(3)-bbox(4))>10&&extent~=1)
-        text(centroid(1)-15,centroid(2),'ellipse');
+        text(centroid(1), centroid(2), 'ellipse', 'HorizontalAlignment', 'center');
     end
 end
