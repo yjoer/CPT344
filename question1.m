@@ -33,6 +33,12 @@ for x = 1:length(stats)
     extent = stats(x).Extent;
     bbox = stats(x).BoundingBox;
     extrema = stats(x).Extrema;
+    
+    hold on;
+    plot(extrema(:,1), extrema(:,2), 'ko');
+    
+    text(centroid(1) + 40, centroid(2), string());
+    
     if (abs(bbox(3)-bbox(4))<10&&extent==1)
         text(centroid(1)-22,centroid(2),'square');
     end
@@ -51,7 +57,9 @@ for x = 1:length(stats)
     if (abs(bbox(3)-bbox(4))<10&&extent~=1)
         text(centroid(1)-17,centroid(2),'circle');
     end
-    if (abs(bbox(3)-bbox(4))>10&&extent~=1)
+    if (abs(extrema(1, 1) - extrema(2, 1)) > 2 &&...
+        abs(extrema(5, 1) - extrema(6, 1)) > 2 &&...
+        abs(bbox(3)-bbox(4))>10&&extent~=1)
         text(centroid(1)-15,centroid(2),'ellipse');
     end
 end
