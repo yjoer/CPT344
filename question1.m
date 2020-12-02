@@ -3,7 +3,7 @@ clc
 close all
 
 % Custom Parameters
-debug = true;
+debug = false;
 with_shape = true;
 with_colour = true;
 
@@ -12,7 +12,7 @@ complement = true;
 threshold = 0.88;
 
 % Read Image
-image=imread('3.3.png');
+image=imread('3.1.png');
 
 if (debug == true)
     figure(1), imshow(image);
@@ -73,6 +73,15 @@ if (with_colour == true)
 end
 
 for c = 1:length(centroids)
-    labels = [shape_texts{c}, colour_texts{c}];
+    if (with_shape == true)
+        labels = shape_texts{c};
+    end
+    if (with_colour == true)
+        labels = colour_texts{c};
+    end
+    if (with_shape == true && with_colour == true)
+        labels = [shape_texts{c}, colour_texts{c}];
+    end
+    
     text(centroids{c}(1), centroids{c}(2), labels, 'HorizontalAlignment', 'center');
 end
