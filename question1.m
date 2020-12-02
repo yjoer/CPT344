@@ -26,7 +26,7 @@ if (filter == true)
     
     if (debug == true)
         figure(2), imshow(image);
-        title('Filtered Image (Mean Filter)');
+        title('Filtered Image');
     end
 end
 
