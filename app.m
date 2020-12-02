@@ -11,8 +11,10 @@ filter = false;
 complement = true;
 threshold = 0.88;
 
+save_output = false;
+
 % Read Image
-image=imread('3.1.png');
+image=imread('3.3.png');
 
 if (debug == true)
     figure(1), imshow(image);
@@ -84,4 +86,8 @@ for c = 1:length(centroids)
     end
     
     text(centroids{c}(1), centroids{c}(2), labels, 'HorizontalAlignment', 'center');
+end
+
+if (save_output == true)
+    saveas(figure(5), 'out.png');
 end
