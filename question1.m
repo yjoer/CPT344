@@ -3,46 +3,70 @@ clc
 close all
 
 % Custom Parameters
-threshold = 0.88;
+debug = true;
+filter = true;
 complement = true;
+threshold = 0.88;
 
-%Read Image
-Image1=imread('3.3.png');
-%figure(1),imshow(Image1);
-%title('original image');
+% Read Image
+image=imread('2.jpg');
 
-%Convert rgb image from to grayscale image
-grayImage=rgb2gray(Image1);
-%figure(2),imshow(grayImage);
-%title('grayscale image');
+if (debug == true)
+    figure(1), imshow(image);
+    title('Original Image');
+end
 
-%Convert it into black and white image
-%Preparation for the boundary tracing using bwboundaries
+if (filter == true)
+    % 3x3 mean filter
+    % filterWindow = ones(3) / 9;
+    % image = imfilter(image, filterWindow);
+    
+    % Gaussian filter
+    image = imgaussfilt(image, 0.5);
+    
+    if (debug == true)
+        figure(2), imshow(image);
+        title('Filtered Image (Mean Filter)');
+    end
+end
+
+% Convert rgb image to grayscale image
+grayImage=rgb2gray(image);
+
+if (debug == true)
+    figure(3), imshow(grayImage);
+    title('Grayscale Image');
+end
+
+% Convert grayscale image into black and white image
+% Preparation for the boundary tracing using bwboundaries
 if (threshold == -1)
     threshold = graythresh(grayImage);
 end
 
-BW = im2bw(grayImage, threshold);
+BW = imbinarize(grayImage, threshold);
 
 if (complement == true)
     BW = imcomplement(BW);
 end
 
-figure(3),imshow(BW);
-%title('binary image');
+if (debug == true)
+    figure(4), imshow(BW);
+    title('Binary Image');
+end
 
-%get label matrix of contiguous region
+% Get label matrix of contiguous region
 [L,n] = bwlabel(BW);
 
-%get properties of the image region
+% Get properties of the image region
 stats  = regionprops(L, 'all');
 
-figure(2),imshow(Image1);
-title('final image');
+figure(5), imshow(image);
+title('Final Image');
 
 hold on
-%traverse every object in the image region
-%recognize shape using image properties
+% Traverse every object in the image region
+% Recognize shape using image properties
 for x = 1:length(stats)
     centroid = stats(x).Centroid;
     circularity = stats(x).Circularity;
@@ -71,8 +95,11 @@ for x = 1:length(stats)
     leftBottomY = extrema(7,2);
     leftTopY = extrema(8,2);
     
-    hold on;
-    plot(extrema(:,1), extrema(:,2), 'ko');
+    % Plot extrema points
+    if (debug == true)
+        hold on;
+        plot(extrema(:,1), extrema(:,2), 'ko');
+    end
     
     shapeName = {};
     
