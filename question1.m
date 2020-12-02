@@ -4,6 +4,9 @@ close all
 
 % Custom Parameters
 debug = true;
+with_shape = true;
+with_colour = true;
+
 filter = false;
 complement = true;
 threshold = 0.88;
@@ -62,11 +65,24 @@ figure(5), imshow(image);
 title('Final Image');
 
 hold on
-recognize_shape(debug, L);
+if (with_shape == true)
+    [centroids, shape_texts] = recognize_shape(debug, L);
+end
+if (with_colour == true)
+    [centroids, colour_texts] = recognize_colour(debug, image, L);
+end
 
-function recognize_shape(debug, label)
+for c = 1:length(centroids)
+    labels = [shape_texts{c}, colour_texts{c}];
+    text(centroids{c}(1), centroids{c}(2), labels, 'HorizontalAlignment', 'center');
+end
+
+function [centroids, labels] = recognize_shape(debug, label)
     % Get properties of the image region
     stats  = regionprops(label, 'all');
+    
+    centroids = {};
+    labels = {};
     
     % Traverse every object in the image region
     % Recognize shape using image properties
@@ -103,7 +119,7 @@ function recognize_shape(debug, label)
             hold on;
             plot(extrema(:,1), extrema(:,2), 'ko');
         end
-
+        
         shapeName = {};
 
         if (abs(bbox(3) - bbox(4)) < 10 && abs(extent - 1) < 0.01)
@@ -190,7 +206,8 @@ function recognize_shape(debug, label)
             extent ~= 1)
             shapeName{end+1} = 'ellipse';
         end
-
-        text(centroid(1), centroid(2), strjoin(shapeName, ', '), 'HorizontalAlignment', 'center');
+        
+        centroids{end+1} = centroid;
+        labels{end+1} = {strjoin(shapeName, ', ')};
     end
 end
