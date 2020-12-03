@@ -4,8 +4,8 @@ function [centroids, labels] = recognize_colour(debug, image, label)
     blueChannel = image(:,:,3);
     
     statsRed = regionprops(label, redChannel, 'centroid', 'MeanIntensity');
-    statsGreen = regionprops(label, greenChannel, 'centroid', 'MeanIntensity');
-    statsBlue = regionprops(label, blueChannel, 'centroid', 'MeanIntensity');
+    statsGreen = regionprops(label, greenChannel, 'MeanIntensity');
+    statsBlue = regionprops(label, blueChannel, 'MeanIntensity');
     
     centroids = {};
     labels = {};
