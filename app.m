@@ -8,13 +8,13 @@ with_shape = true;
 with_colour = true;
 
 filter = false;
-complement = true;
-threshold = 0.88;
+complement = false;
+threshold = -1;
 
 save_output = false;
 
 % Read Image
-image=imread('3.3.png');
+image = imread('1.png');
 
 if (debug == true)
     figure(1), imshow(image);
