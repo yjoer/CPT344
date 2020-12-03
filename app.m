@@ -36,7 +36,7 @@ if (filter == true)
 end
 
 % Convert rgb image to grayscale image
-grayImage=rgb2gray(image);
+grayImage = rgb2gray(image);
 
 if (debug == true)
     figure(3), imshow(grayImage);
